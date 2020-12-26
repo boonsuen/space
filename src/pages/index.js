@@ -10,16 +10,18 @@ export default function Home() {
       <Head>
         <title>Space</title>
       </Head>
-      <img src={img_logo} alt="Space logo" />
-      <Link href="login"><a>Login</a></Link>
-      <Link href="signup"><a>Sign Up</a></Link>
+      <div className="container">
+        <img src={img_logo} alt="Space logo" />
+        <Link href="/login"><a>Login</a></Link>
+        <Link href="/signup"><a>Sign Up</a></Link>
+      </div>
       <main>
         <h1>All In One Place</h1>
         <div>Todo</div>
         <div>Kanban</div>
         <div>List</div>
         <div>Table</div>
-        <Link href="signup"><a>Get Started</a></Link>
+        <Link href="/signup"><a>Get Started</a></Link>
       </main>
 
 
