@@ -79,12 +79,12 @@ const Hero = styled.div`
 
 const FeaturesContainer = styled.div`
   display: flex;
-  gap: 20px;
   margin-bottom: 35px;
 
   & > div { 
     font-size: 36px;
     font-weight: 700;
+    margin: 0 10px;
     padding: 10px 24px;
     position: relative;
   }
