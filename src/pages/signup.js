@@ -44,6 +44,12 @@ export const Title = styled.h1`
   ${media['400']`margin: 0 0 25px 0`};
 `;
 
+export const Fieldset = styled.fieldset`
+  padding: 0;
+  margin: 0;
+  border: none;
+`;
+
 export const Label = styled.label`
   display: flex;
   align-items: center;
@@ -105,27 +111,31 @@ const Signup = () => (
     <Card>
       <Title>Create a new account</Title>
       <form>
-        <Label htmlFor="email">
-          <img src={img_email} alt="Email" />Email
-        </Label>
-        <Input 
-          type="email" 
-          id="email" 
-          name="email"
-          placeholder="you@example.com" 
-          required
-        />
-        <Label htmlFor="password">
-          <img src={img_password} alt="Password" />
-          Password
-        </Label>
-        <Input 
-          type="password" 
-          id="password" 
-          name="password"
-          placeholder="Enter your password"
-          required
-        />
+        <Fieldset>
+          <Label htmlFor="email">
+            <img src={img_email} alt="Email" />Email
+          </Label>
+          <Input 
+            type="email" 
+            id="email" 
+            name="email"
+            placeholder="you@example.com" 
+            required
+          />
+        </Fieldset>
+        <Fieldset>
+          <Label htmlFor="password">
+            <img src={img_password} alt="Password" />
+            Password
+          </Label>
+          <Input 
+            type="password" 
+            id="password" 
+            name="password"
+            placeholder="Enter your password"
+            required
+          />
+        </Fieldset>            
         <Button type="submit">
           Continue
           <img src={img_send} alt="Paper Plane" />
