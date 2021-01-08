@@ -22,17 +22,12 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     font-family: "Inter", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, sans-serif;
     font-size: 16px;
+    -webkit-font-smoothing: antialiased;
   }
 
   input, button {
     font-family: "Inter", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, sans-serif;
-  }
-
-  .container {
-    width: 90%;
-    max-width: 1138px;
-    margin: auto;
-  }
+  }  
 
   a {
     color: inherit;
@@ -49,6 +44,18 @@ const GlobalStyle = createGlobalStyle`
     align-items: center;
     padding: 0;
     appearance: none;    
+  }
+
+  .container {
+    width: 90%;
+    max-width: 1138px;
+    margin: auto;
+  }
+
+  .flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 `;
 
