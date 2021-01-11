@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Item from './Item';
 import AddTodoButton from './AddTodoButton';
+import ContextMenu from './ContextMenu';
 import useLocalStorage from '../hooks/useLocalStorage';
 
 import img_sort from '../assets/img/sort.svg';
@@ -49,18 +50,66 @@ const HeaderActions = styled.div`
 
 const Todos = styled.div``;
 
-const Content = () => {
+const Content = props => {
   const [hasMounted, setHasMounted] = useState(false);
   const [todos, setTodos] = useLocalStorage('todos', []);
+
   useEffect(() => {
     setHasMounted(true);
   }, []);
+
+  useEffect(() => {
+    console.log('props.contextMenuState', props.contextMenuState);
+    if (props.contextMenuState.visible) {
+      const root = document.getElementById('itemContextMenu');
+      root.style.display = 'block';
+      const clickX = props.contextMenuState.clickX;
+      const clickY = props.contextMenuState.clickY;
+      const screenW = window.innerWidth;
+      const screenH = window.innerHeight;
+      const rootW = root.offsetWidth;
+      const rootH = root.offsetHeight;
+            
+      const right = (screenW - clickX) > rootW;
+      const left = !right;
+      const top = (screenH - clickY) > rootH;
+      const bottom = !top;
+      
+      if (right) {
+        root.style.left = `${clickX + 5}px`;
+      }
+      
+      if (left) {
+        root.style.left = `${clickX - rootW - 5}px`;
+      }
+      
+      if (top) {
+        root.style.top = `${clickY + 5}px`;
+      }
+      
+      if (bottom) {
+        root.style.top = `${clickY - rootH - 5}px`;
+      }
+    }
+  }, [props.contextMenuState]);
+
+  // TODO: improve handleScroll
+  const handleScroll = event => {
+    if (props.contextMenuState.visible) {
+      props.setContextMenuState({
+        visible: false,
+        clickX: null,
+        clickY: null
+      });
+    }
+  };
+
   if (!hasMounted) {
     return null;
-  }
+  }  
     
   return (
-    <StyledContent>
+    <StyledContent onScroll={handleScroll}>
       <TodoWrapper>
         <Header>
           <h1>Todo</h1>
@@ -75,11 +124,19 @@ const Content = () => {
         </Header>
         <Todos>
           {todos.map((todo, idx) => (
-            <Item todo={todo} key={`todo-${idx}`} />
+            <Item 
+              todo={todo} 
+              key={`todo-${idx}`} 
+              setContextMenuState={props.setContextMenuState} 
+            />
           ))}          
           <AddTodoButton todos={todos} setTodos={setTodos} />      
         </Todos>
       </TodoWrapper>    
+      <ContextMenu 
+        contextMenuState={props.contextMenuState}
+        setContextMenuState={props.setContextMenuState}
+      />
     </StyledContent>
   );
 };

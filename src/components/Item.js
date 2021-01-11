@@ -11,7 +11,7 @@ const StyledItem = styled.div`
 `;
 
 const Checkbox = styled.button`
-  width: 18px;
+  min-width: 18px;
   height: 18px;
   border-radius: 50%;
   background: #000;
@@ -44,16 +44,30 @@ const CheckboxInner = styled.div`
 
 const TodoContent = styled.div``;
 
-export default function Item({ todo }) {
+export default function Item({ todo, setContextMenuState }) {
+  const handleContextMenu = event => {
+    event.preventDefault();
+    setContextMenuState({
+      visible: true,
+      clickX: event.clientX,
+      clickY: event.clientY
+    });
+    console.log('handleContextMenu');
+  };
+
   return (
-    <StyledItem role="button" tabIndex="0">
+    <StyledItem 
+      role="button" 
+      tabIndex="0" 
+      onContextMenu={handleContextMenu}
+    >
       <Checkbox>
         <CheckboxInner className="flex-center">
           <img src={img_check} alt="Check" />
         </CheckboxInner>            
       </Checkbox>
       <TodoContent>
-        {todo}
+        {todo.content}
       </TodoContent>
     </StyledItem>
   );

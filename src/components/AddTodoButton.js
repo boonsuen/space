@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styled, { keyframes } from 'styled-components';
+import { v4 as uuidv4 } from 'uuid';
 
 import img_add from '../assets/img/add.svg';
 
@@ -102,13 +103,20 @@ const Cancel = styled.button`
   }
 `;
 
-const AddTodoButton = props => {
+const AddTodoButton = ({ todos, setTodos }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [todoContent, setTodoContent] = useState('');
 
   const handleSubmit = event => {
     event.preventDefault();
-    props.setTodos(props.todos.concat(todoContent));
+    const timestamp = Date.now();
+    setTodos(todos.concat({
+      id: uuidv4(),
+      content: todoContent,
+      completed: false,
+      createdAt: timestamp,
+      updatedAt: timestamp 
+    }));
     setTodoContent('');
   };
 
@@ -156,24 +164,7 @@ const AddTodoButton = props => {
         </Actions>
       )}
     </form>
-  ); 
-  // isEditing ?
-  // <div className="baseAdd addTask">
-  //   <button className="baseAdd-icon" type="button" aria-label="Add a task">
-  //     <i className="icon fontIcon ms-Icon ms-Icon--Add iconSize-24" aria-hidden="true"></i>
-  //   </button>
-  //   <input 
-  //     id="baseAddInput-addTask" 
-  //     className="baseAdd-input chromeless" 
-  //     aria-label="Add a task" 
-  //     aria-describedby="baseAddInput-addTask-description" 
-  //     type="text" 
-  //     maxLength="255" 
-  //     placeholder="Add a task" 
-  //     tabIndex="-1" 
-  //     defaultValue="hello" 
-  //   />
-  // </div>
+  );
 };
 
 export default AddTodoButton;

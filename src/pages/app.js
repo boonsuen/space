@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import Sidebar from '../components/Sidebar';
 import Content from '../components/Content';
@@ -7,11 +8,39 @@ const StyledApp = styled.div`
   height: 100vh;
 `;
 
-const App = () => (
-  <StyledApp>
-    <Sidebar />
-    <Content />
-  </StyledApp>
-);
+const App = () => {
+  const [contextMenuState, setContextMenuState] = useState({
+    visible: false,
+    clickX: null,
+    clickY: null
+  });
+
+  const handleClick = event => {
+    console.log(event.target.className);
+    if (event.target.className === 'contextMenu--option') {
+      setContextMenuState({
+        visible: false,
+        clickX: null,
+        clickY: null
+      });
+    } else if (contextMenuState.visible) {
+      setContextMenuState({
+        visible: false,
+        clickX: null,
+        clickY: null
+      });
+    }
+  };
+
+  return (
+    <StyledApp onClick={handleClick}>
+      <Sidebar />
+      <Content
+        contextMenuState={contextMenuState} 
+        setContextMenuState={setContextMenuState}
+      />
+    </StyledApp>
+  );
+};
 
 export default App;
