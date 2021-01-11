@@ -12,7 +12,8 @@ const App = () => {
   const [contextMenuState, setContextMenuState] = useState({
     visible: false,
     clickX: null,
-    clickY: null
+    clickY: null,
+    selectedTodo: null
   });
 
   const handleClick = event => {
@@ -21,13 +22,15 @@ const App = () => {
       setContextMenuState({
         visible: false,
         clickX: null,
-        clickY: null
+        clickY: null,
+        selectedTodo: null
       });
     } else if (contextMenuState.visible) {
       setContextMenuState({
         visible: false,
         clickX: null,
-        clickY: null
+        clickY: null,
+        selectedTodo: null
       });
     }
   };

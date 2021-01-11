@@ -50,9 +50,9 @@ export default function Item({ todo, setContextMenuState }) {
     setContextMenuState({
       visible: true,
       clickX: event.clientX,
-      clickY: event.clientY
+      clickY: event.clientY,
+      selectedTodo: todo
     });
-    console.log('handleContextMenu');
   };
 
   return (

@@ -49,8 +49,13 @@ const StyledContextMenu = styled.div`
 `;
 
 const ContextMenu = props => {
-  const handleDelete = event => {
-    
+  const handleDelete = () => {
+    props.setTodos(prevTodos => {
+      const newTodos = prevTodos.filter(
+        (todo) => todo.id !== props.contextMenuState.selectedTodo.id
+      );
+      return newTodos;
+    });
   };
 
   return (

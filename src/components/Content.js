@@ -99,7 +99,8 @@ const Content = props => {
       props.setContextMenuState({
         visible: false,
         clickX: null,
-        clickY: null
+        clickY: null,
+        selectedTodo: null
       });
     }
   };
@@ -135,7 +136,7 @@ const Content = props => {
       </TodoWrapper>    
       <ContextMenu 
         contextMenuState={props.contextMenuState}
-        setContextMenuState={props.setContextMenuState}
+        setTodos={setTodos}
       />
     </StyledContent>
   );
