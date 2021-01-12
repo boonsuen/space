@@ -1,0 +1,71 @@
+import styled from 'styled-components';
+import Modal from 'react-modal';
+
+Modal.setAppElement('#__next');
+
+const ReactModalAdapter = ({ className, ...props }) => {
+  const contentClassName = `${className}__content`;
+  const overlayClassName = `${className}__overlay`;
+  return (
+    <Modal
+      portalClassName={className}
+      className={contentClassName}
+      overlayClassName={overlayClassName}
+      closeTimeoutMS={200}
+      {...props}
+    />
+  );
+};
+
+const BaseModal = styled(ReactModalAdapter)`
+  .ReactModal__Overlay {
+    position: fixed; 
+    top: 0px; 
+    left: 0px; 
+    right: 0px; 
+    bottom: 0px; 
+    background-color: rgba(3, 53, 153, 0.1);
+    ${'' /* backdrop-filter: blur(1px); */}
+    z-index: 1;
+  }
+
+  .ReactModal__Content {
+    opacity: 0;
+  }
+
+  .ReactModal__Content--after-open {
+    opacity: 1;
+    transition: opacity 200ms;
+  }
+
+  .ReactModal__Content--before-close {
+    opacity: 0;
+  }
+`;
+ 
+const StyledEditTodoModal = styled(BaseModal)`
+  &__content {
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    right: auto; 
+    bottom: auto; 
+    background: rgb(255, 255, 255); 
+    overflow: auto; 
+    border-radius: 10px; 
+    outline: none;
+    margin-right: -50%; 
+    transform: translate(-50%, -50%);
+    padding: 28px;
+    width: 390px;
+    box-sizing: border-box;
+    box-shadow: 0 2px 8px rgba(188, 196, 215, 0.5);
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+`;
+
+export { StyledEditTodoModal };

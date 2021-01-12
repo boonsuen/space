@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import styled from 'styled-components';
+import EditTodoModal from './EditTodoModal';
 
 import img_check from '../assets/img/check.svg';
 
@@ -45,6 +47,8 @@ const CheckboxInner = styled.div`
 const TodoContent = styled.div``;
 
 export default function Item({ todo, setContextMenuState }) {
+  const [showEditTodoModal, setShowEditTodoModal] = useState(false);
+
   const handleContextMenu = event => {
     event.preventDefault();
     setContextMenuState({
@@ -55,20 +59,39 @@ export default function Item({ todo, setContextMenuState }) {
     });
   };
 
+  const handleClick = event => {
+    openEditTodoModal();
+  };
+
+  const openEditTodoModal = () => {
+    setShowEditTodoModal(true);
+
+  };
+  
+  const closeEditTodoModal = () => {
+    setShowEditTodoModal(false);
+  };
+
   return (
-    <StyledItem 
-      role="button" 
-      tabIndex="0" 
-      onContextMenu={handleContextMenu}
-    >
-      <Checkbox>
-        <CheckboxInner className="flex-center">
-          <img src={img_check} alt="Check" />
-        </CheckboxInner>            
-      </Checkbox>
-      <TodoContent>
-        {todo.content}
-      </TodoContent>
-    </StyledItem>
+    <>
+      <StyledItem 
+        role="button" 
+        tabIndex="0" 
+        onContextMenu={handleContextMenu}
+        onClick={handleClick}
+      >
+        <Checkbox>
+          <CheckboxInner className="flex-center">
+            <img src={img_check} alt="Check" />
+          </CheckboxInner>            
+        </Checkbox>
+        <TodoContent>
+          {todo.content}
+        </TodoContent>        
+      </StyledItem>
+      <EditTodoModal 
+        {...{showEditTodoModal, closeEditTodoModal}}
+      />
+    </>
   );
 }
