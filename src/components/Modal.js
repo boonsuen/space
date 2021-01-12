@@ -25,8 +25,17 @@ const BaseModal = styled(ReactModalAdapter)`
     right: 0px; 
     bottom: 0px; 
     background-color: rgba(3, 53, 153, 0.1);
-    ${'' /* backdrop-filter: blur(1px); */}
     z-index: 1;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+  }
+
+  .ReactModal__Overlay--after-open{
+    opacity: 1;
+  }
+
+  .ReactModal__Overlay--before-close{
+    opacity: 0;
   }
 
   .ReactModal__Content {
@@ -35,7 +44,7 @@ const BaseModal = styled(ReactModalAdapter)`
 
   .ReactModal__Content--after-open {
     opacity: 1;
-    transition: opacity 200ms;
+    transition: opacity 0.2s ease-in-out;
   }
 
   .ReactModal__Content--before-close {

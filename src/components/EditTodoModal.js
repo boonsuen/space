@@ -81,6 +81,7 @@ const EditTodoModal = ({ showEditTodoModal, closeEditTodoModal }) => {
       isOpen={showEditTodoModal}
       onRequestClose={closeEditTodoModal}
       contentLabel="Edit Todo Modal"
+      closeTimeoutMS={200}
     >
       <CloseModalButton onClick={closeEditTodoModal} type="button">
         <img src={img_close} alt="Close Modal" />
