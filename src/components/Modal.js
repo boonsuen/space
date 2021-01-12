@@ -66,7 +66,8 @@ const StyledEditTodoModal = styled(BaseModal)`
     margin-right: -50%; 
     transform: translate(-50%, -50%);
     padding: 28px;
-    width: 390px;
+    max-width: 590px;
+    width: 90%;
     box-sizing: border-box;
     box-shadow: 0 2px 8px rgba(188, 196, 215, 0.5);
   }

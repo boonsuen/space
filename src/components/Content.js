@@ -105,6 +105,15 @@ const Content = props => {
     }
   };
 
+  const handleDeleteTodo = id => event => {
+    setTodos(prevTodos => {
+      const newTodos = prevTodos.filter(
+        (todo) => todo.id !== id
+      );
+      return newTodos;
+    });
+  };
+
   if (!hasMounted) {
     return null;
   }  
@@ -126,9 +135,10 @@ const Content = props => {
         <Todos>
           {todos.map((todo, idx) => (
             <Item 
+              key={`todo-${idx}`}
               todo={todo} 
-              key={`todo-${idx}`} 
               setContextMenuState={props.setContextMenuState} 
+              handleDeleteTodo={handleDeleteTodo}
             />
           ))}          
           <AddTodoButton todos={todos} setTodos={setTodos} />      
@@ -137,6 +147,7 @@ const Content = props => {
       <ContextMenu 
         contextMenuState={props.contextMenuState}
         setTodos={setTodos}
+        handleDeleteTodo={handleDeleteTodo}
       />
     </StyledContent>
   );

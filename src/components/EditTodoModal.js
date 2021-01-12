@@ -19,7 +19,7 @@ const ModalInput = styled.input`
   box-sizing: border-box;
   border-radius: 4px;
   transition: all 300ms;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   background-color: #F2F2F2;
 
   &:focus {
@@ -29,8 +29,9 @@ const ModalInput = styled.input`
   }
 `;
 
-const Actions = styled.div`
+const RenameActions = styled.div`
   display: flex;
+  margin-bottom: 25px;
 `;
 
 const fadeIn = keyframes`
@@ -45,7 +46,7 @@ const fadeIn = keyframes`
 `;
 
 const Save = styled.button`
-  background-color: #4966FF;
+  background-color: #2C80FF;
   animation: ${fadeIn} ease-out 0.3s;
   color: #fff;
   width: 67px;
@@ -74,8 +75,20 @@ const Cancel = styled.button`
   }
 `;
 
-const EditTodoModal = ({ showEditTodoModal, closeEditTodoModal }) => {
+const TodoActions = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
 
+const DeleteButton = styled.button`
+  width: 32px;
+  height: 32px;
+  border-radius: 3px;
+  background-color: #FFF6E4;
+`;
+
+const EditTodoModal = ({ todo, handleDeleteTodo, showEditTodoModal, closeEditTodoModal }) => {
   return (
     <StyledEditTodoModal
       isOpen={showEditTodoModal}
@@ -95,26 +108,28 @@ const EditTodoModal = ({ showEditTodoModal, closeEditTodoModal }) => {
           maxLength="255"
           placeholder=""
           tabIndex="-1"
-          value={'Build the Space App MVP'}
+          value={todo.content}
           onChange={() => {}}
         />
-        <Actions>
+        <RenameActions>
           <Save type="submit">Save</Save>
           <Cancel type="button">Cancel</Cancel>
-        </Actions>
-        <MarkAsCompletedButton />
+        </RenameActions>        
       </form> 
-      <button type="button">
-        <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <title>Delete task</title>
-          <path 
-            fillRule="evenodd" 
-            clipRule="evenodd" 
-            d="M5.5 1C5.22386 1 5 1.22386 5 1.5C5 1.77614 5.22386 2 5.5 2H9.5C9.77614 2 10 1.77614 10 1.5C10 1.22386 9.77614 1 9.5 1H5.5ZM3 3.5C3 3.22386 3.22386 3 3.5 3H5H10H11.5C11.7761 3 12 3.22386 12 3.5C12 3.77614 11.7761 4 11.5 4H11V12C11 12.5523 10.5523 13 10 13H5C4.44772 13 4 12.5523 4 12V4H3.5C3.22386 4 3 3.77614 3 3.5ZM5 4H10V12H5V4Z" 
-            fill="#FF5252"
-          />
-        </svg>
-      </button>        
+      <TodoActions>
+        <MarkAsCompletedButton />
+        <DeleteButton type="button" onClick={handleDeleteTodo(todo.id)}>
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <title>Delete task</title>
+            <path 
+              fillRule="evenodd" 
+              clipRule="evenodd" 
+              d="M5.5 1C5.22386 1 5 1.22386 5 1.5C5 1.77614 5.22386 2 5.5 2H9.5C9.77614 2 10 1.77614 10 1.5C10 1.22386 9.77614 1 9.5 1H5.5ZM3 3.5C3 3.22386 3.22386 3 3.5 3H5H10H11.5C11.7761 3 12 3.22386 12 3.5C12 3.77614 11.7761 4 11.5 4H11V12C11 12.5523 10.5523 13 10 13H5C4.44772 13 4 12.5523 4 12V4H3.5C3.22386 4 3 3.77614 3 3.5ZM5 4H10V12H5V4Z" 
+              fill="#FF5252"
+            />
+          </svg>
+        </DeleteButton>
+      </TodoActions>             
     </StyledEditTodoModal>
   );
 };
