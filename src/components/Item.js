@@ -65,7 +65,6 @@ export default function Item({ todo, setContextMenuState, handleDeleteTodo }) {
 
   const openEditTodoModal = () => {
     setShowEditTodoModal(true);
-
   };
   
   const closeEditTodoModal = () => {

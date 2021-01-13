@@ -135,7 +135,7 @@ const Content = props => {
         <Todos>
           {todos.map((todo, idx) => (
             <Item 
-              key={`todo-${idx}`}
+              key={`todo-${idx}-${todo.id}`}
               todo={todo} 
               setContextMenuState={props.setContextMenuState} 
               handleDeleteTodo={handleDeleteTodo}
