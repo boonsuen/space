@@ -52,13 +52,16 @@ const ContextMenu = ({ handleDeleteTodo, contextMenuState }) => {
   return (
     contextMenuState.visible && 
       <StyledContextMenu id="itemContextMenu">
-        <button className="contextMenu--option">
+        <button 
+          onClick={() => {}}
+          className="contextMenu--option"
+        >
           <img src={img_edit} alt="Edit" />
           Edit task
         </button>
         <button 
-          className="contextMenu--option" 
           onClick={handleDeleteTodo(contextMenuState.selectedTodo.id)}
+          className="contextMenu--option"           
         >
           <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path 

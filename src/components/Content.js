@@ -155,7 +155,6 @@ const Content = props => {
       </TodoWrapper>    
       <ContextMenu 
         contextMenuState={props.contextMenuState}
-        setTodos={setTodos}
         handleDeleteTodo={handleDeleteTodo}
       />
     </StyledContent>

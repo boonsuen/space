@@ -19,7 +19,7 @@ const ModalInput = styled.input`
   padding: 0 10px 0 10px;
   box-sizing: border-box;
   border-radius: 4px;
-  transition: all 300ms;
+  transition: all 200ms;
   margin-bottom: 15px;
   background-color: #F2F2F2;
 
@@ -90,9 +90,10 @@ const DeleteButton = styled.button`
   background-color: #FFF6E4;
 `;
 
-const EditContentForm = ({ todo, editTodo, closeEditTodoModal }) => {
+const EditContentForm = ({ todo, editTodo }) => {
   const [todoContent, setTodoContent] = useState(todo.content);  
   const [isNewTodoContent, setIsNewTodoContent] = useState(false);
+  const modalInputRef = useRef(null);
 
   const handleTodoContentChange = event => {
     setTodoContent(event.target.value);
@@ -103,12 +104,16 @@ const EditContentForm = ({ todo, editTodo, closeEditTodoModal }) => {
 
     if (isNewTodoContent) {
       editTodo('EDIT_CONTENT', todo.id, { newContent: todoContent });
-      closeEditTodoModal();
+      setIsNewTodoContent(false);
+      modalInputRef.current.blur();
     }
   };
 
+  const handleCancel = event => {
+    setTodoContent(todo.content);
+  };
+
   useEffect(() => {
-    console.log('heyheyheyhey');
     setIsNewTodoContent(todoContent !== todo.content);
   }, [todoContent]);
 
@@ -118,14 +123,16 @@ const EditContentForm = ({ todo, editTodo, closeEditTodoModal }) => {
         aria-label="Add a task"
         type="text"
         maxLength="255"
-        placeholder=""
         tabIndex="-1"
-        defaultValue={todo.content}
+        value={todoContent}
         onChange={handleTodoContentChange}
+        ref={modalInputRef}
       />
       <EditContentActions>
-        <Save type="submit" enabled={isNewTodoContent}>Save</Save>
-        {isNewTodoContent && <Cancel type="button">Cancel</Cancel>}
+        <Save enabled={isNewTodoContent} type="submit">Save</Save>
+        {isNewTodoContent && 
+          <Cancel onClick={handleCancel} type="button">Cancel</Cancel>
+        }
       </EditContentActions>
     </form>
   );
