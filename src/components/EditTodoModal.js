@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { StyledEditTodoModal } from './Modal';
 import MarkAsCompletedButton from './MarkAsCompletedButton';
@@ -29,7 +30,7 @@ const ModalInput = styled.input`
   }
 `;
 
-const RenameActions = styled.div`
+const StyledRenameActions = styled.div`
   display: flex;
   margin-bottom: 25px;
 `;
@@ -46,29 +47,30 @@ const fadeIn = keyframes`
 `;
 
 const Save = styled.button`
-  background-color: #2C80FF;
+  cursor: ${props => !props.enabled && 'not-allowed'};
+  background-color: ${props => props.enabled ? '#2C80FF' : '#83B4FF'};
   animation: ${fadeIn} ease-out 0.3s;
   color: #fff;
   width: 67px;
   height: 34px;
   margin-right: 10px;
   border-radius: 3px;
+  transition: background-color 0.2s;
 
   -webkit-backface-visibility: hidden;
   -webkit-transform: translateZ(0) scale(1.0, 1.0);
   transform: translateZ(0);
+
+  &:hover {
+    background-color: ${props => props.enabled && '#0066FF'};
+  }
 `;
 
 const Cancel = styled.button`
   background: none;
-  animation: ${fadeIn} ease-out 0.5s;
   padding: 0 4px;
   color: #696F7B;
-  transition: all 0.2s;
-
-  -webkit-backface-visibility: hidden;
-  -webkit-transform: translateZ(0) scale(1.0, 1.0);
-  transform: translateZ(0);
+  transition: color 0.2s;
 
   &:hover {
     color: #23375E;
@@ -88,7 +90,43 @@ const DeleteButton = styled.button`
   background-color: #FFF6E4;
 `;
 
-const EditTodoModal = ({ todo, handleDeleteTodo, showEditTodoModal, closeEditTodoModal }) => {
+const RenameActions = ({ isNewTodoContent }) => {
+  return (
+    <StyledRenameActions>
+      <Save type="submit" enabled={isNewTodoContent}>Save</Save>
+      {isNewTodoContent && <Cancel type="button">Cancel</Cancel>}
+    </StyledRenameActions>
+  );
+};
+
+const EditTodoModal = ({ 
+  todo, 
+  editTodo,
+  handleDeleteTodo, 
+  showEditTodoModal, 
+  closeEditTodoModal 
+}) => {
+  const [todoContent, setTodoContent] = useState(todo.content);
+  const [isNewTodoContent, setIsNewTodoContent] = useState(false);
+
+  const handleSubmit = event => {
+    event.preventDefault();
+
+    if (isNewTodoContent) {
+      editTodo('EDIT_CONTENT', todo.id, { newContent: todoContent });
+      closeEditTodoModal();
+      setIsNewTodoContent(false);
+    }
+  };
+
+  const handleTodoContentChange = event => {
+    setTodoContent(event.target.value);
+  };
+
+  useEffect(() => {
+    setIsNewTodoContent(todoContent !== todo.content);
+  }, [todoContent]);
+
   return (
     <StyledEditTodoModal
       isOpen={showEditTodoModal}
@@ -99,22 +137,17 @@ const EditTodoModal = ({ todo, handleDeleteTodo, showEditTodoModal, closeEditTod
       <CloseModalButton onClick={closeEditTodoModal} type="button">
         <img src={img_close} alt="Close Modal" />
       </CloseModalButton>
-      <form onSubmit={event => {
-        event.preventDefault();
-      }}>
+      <form onSubmit={handleSubmit}>
         <ModalInput
           aria-label="Add a task"
           type="text"
           maxLength="255"
           placeholder=""
           tabIndex="-1"
-          value={todo.content}
-          onChange={() => {}}
+          value={todoContent}
+          onChange={handleTodoContentChange}
         />
-        <RenameActions>
-          <Save type="submit">Save</Save>
-          <Cancel type="button">Cancel</Cancel>
-        </RenameActions>        
+        <RenameActions isNewTodoContent={isNewTodoContent} />
       </form> 
       <TodoActions>
         <MarkAsCompletedButton />

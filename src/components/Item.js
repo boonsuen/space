@@ -46,7 +46,12 @@ const CheckboxInner = styled.div`
 
 const TodoContent = styled.div``;
 
-export default function Item({ todo, setContextMenuState, handleDeleteTodo }) {
+export default function Item({ 
+  todo, 
+  editTodo,
+  setContextMenuState, 
+  handleDeleteTodo
+}) {
   const [showEditTodoModal, setShowEditTodoModal] = useState(false);
 
   const handleContextMenu = event => {
@@ -91,6 +96,7 @@ export default function Item({ todo, setContextMenuState, handleDeleteTodo }) {
       <EditTodoModal 
         {...{ 
           todo, 
+          editTodo,
           handleDeleteTodo,
           showEditTodoModal, 
           closeEditTodoModal 

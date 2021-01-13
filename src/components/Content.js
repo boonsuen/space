@@ -106,12 +106,20 @@ const Content = props => {
   };
 
   const handleDeleteTodo = id => event => {
-    setTodos(prevTodos => {
-      const newTodos = prevTodos.filter(
-        (todo) => todo.id !== id
-      );
-      return newTodos;
-    });
+    setTodos(prevTodos => prevTodos.filter(
+      (todo) => todo.id !== id
+    ));
+  };
+
+  const editTodo = (actionType, id, payload) => {
+    if (actionType === 'EDIT_CONTENT') {
+      const { newContent } = payload;
+      setTodos(prevTodos => prevTodos.map(
+        todo => todo.id === id 
+          ? {...todo, content: newContent} 
+          : todo
+      ));
+    }
   };
 
   if (!hasMounted) {
@@ -137,6 +145,7 @@ const Content = props => {
             <Item 
               key={`todo-${idx}-${todo.id}`}
               todo={todo} 
+              editTodo={editTodo}
               setContextMenuState={props.setContextMenuState} 
               handleDeleteTodo={handleDeleteTodo}
             />
