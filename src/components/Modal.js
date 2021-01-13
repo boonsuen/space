@@ -40,15 +40,18 @@ const BaseModal = styled(ReactModalAdapter)`
 
   .ReactModal__Content {
     opacity: 0;
+    transform: translate(-50%, -60%);
   }
 
   .ReactModal__Content--after-open {
     opacity: 1;
-    transition: opacity 0.2s ease-in-out;
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+    transform: translate(-50%, -50%);
   }
 
   .ReactModal__Content--before-close {
     opacity: 0;
+    transform: translate(-50%, -60%);
   }
 `;
  
@@ -64,7 +67,6 @@ const StyledEditTodoModal = styled(BaseModal)`
     border-radius: 10px; 
     outline: none;
     margin-right: -50%; 
-    transform: translate(-50%, -50%);
     padding: 28px;
     max-width: 590px;
     width: 90%;
